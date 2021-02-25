@@ -9,6 +9,15 @@
         <link rel="stylesheet" href="./index.css" />
     </head>
     <body>
+        <div class="menu-list">
+            <div class="close">CLOSE</div>
+            <ul>
+                <li>Item1</li>
+                <li>Item2</li>
+                <li>Item3</li>
+                <li>Item4</li>
+            </ul>
+        </div>
         <header class="clearfix">
             <h1>My Weather</h1>
             <nav>
@@ -19,8 +28,18 @@
                     <li>Item4</li>
                 </ul>
             </nav>
+            <nav class="menu"></nav>
         </header>
-        <section class="banner">Welcome to MyHome</section>
+        <section class="banner">
+            <div class="preButton">上一張</div>
+            <div class="nextButton">下一張</div>
+            <ul class="content">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+            <ul class="dot"></ul>
+        </section>
         <section class="list">
             <ul>
                 <li>
@@ -57,5 +76,6 @@
                 </li>
             </ul>
         </section>
+        <script src="./index.js"></script>
     </body>
 </html>

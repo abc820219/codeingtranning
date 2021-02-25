@@ -34,19 +34,67 @@ header ul > li {
     cursor: pointer;
 }
 
+header ul > li:hover {
+    color: rgb(116, 136, 140);
+}
+
 header ul > li + li {
     margin-left: 20px;
 }
 
 section.banner {
+    position: relative;
     overflow: hidden;
     padding: 0 10px;
     line-height: 300px;
+    height: 300px;
     font-size: 200%;
     text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
     background-color: rgb(179, 240, 253);
+}
+
+section.banner ul {
+    position: absolute;
+    transition: all 0.5s;
+}
+
+section.banner .preButton,
+section.banner .nextButton {
+    position: absolute;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: rgba(146, 142, 142, 0.522);
+    z-index: 1;
+}
+
+section.banner .preButton {
+    left: 0px;
+}
+section.banner .nextButton {
+    right: 0px;
+}
+section.banner ul.content li {
+    float: left;
+    width: 100vw;
+}
+
+section.banner ul.dot {
+    display: flex;
+    position: absolute;
+    left: 50%;
+    bottom: 20px;
+    transform: translateX(-50%);
+    line-height: 20px;
+}
+
+section.banner ul.dot li {
+    cursor: pointer;
+}
+
+section.banner ul.dot li.active {
+    color: red;
 }
 
 section.list > ul {
@@ -63,6 +111,10 @@ section.list > ul > li {
     cursor: pointer;
 }
 
+section.list > ul > li:hover {
+    opacity: 0.75;
+}
+
 section.list > ul > li:nth-child(4) ~ li {
     margin-top: 20px;
 }
@@ -70,6 +122,35 @@ section.list > ul > li:nth-child(4) ~ li {
 section.list > ul > li > p {
     background-color: rgb(179, 240, 253);
     line-height: 2;
+}
+
+.menu-list {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 150%;
+    background-color: #fff;
+    transition: left 1s;
+    text-align: center;
+    line-height: 3;
+    z-index: 1;
+}
+.menu-list > ul {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.menu-list.active {
+    left: 0;
+}
+
+.menu-list .close {
+    position: absolute;
+    right: 20px;
 }
 
 @media (max-width: 1200px) {
@@ -85,10 +166,10 @@ section.list > ul > li > p {
 }
 
 @media (max-width: 600px) {
-    header > nav > ul {
+    header > nav:not(nav.menu) {
         display: none;
     }
-    header > nav {
+    header > nav.menu {
         position: absolute;
         right: 20px;
         top: 20px;
