@@ -1,4 +1,40 @@
 ;(() => {
+    const NAVIGATION = document.querySelector('.navigation-anime')
+    for (let i = 0; i <= 100; i++) {
+        const block = document.createElement('div')
+        block.classList.add('anime-block')
+        NAVIGATION.appendChild(block)
+    }
+    function animateCircles() {
+        anime({
+            targets: '.anime-block',
+            translateX: () => anime.random(1200, -1200),
+            translateY: () => anime.random(1200, -1200),
+            scale: () => anime.random(1, 4),
+            easing: 'linear',
+            duration: 2000,
+            opacity: 1,
+            delay: anime.stagger(10),
+            direction: 'alternate',
+            complete: () => {
+                opacity('.navigation-anime')
+            },
+        })
+    }
+    function opacity(className) {
+        anime({
+            targets: className,
+            opacity: 0,
+            duration: 2000,
+            complete: () => {
+                const div = document.querySelector(className)
+                document.body.removeChild(div)
+            },
+        })
+    }
+    animateCircles()
+})()
+;(() => {
     const MENU = document.querySelector('.menu')
     const CLOSE = document.querySelector('.close')
     const MENULIST = document.querySelector('.menu-list')
