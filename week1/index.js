@@ -23,84 +23,115 @@
     let index = 1
     let defaultLeft = 100
     let flag = false
-    for (let i = 0; i < LI.length; i++) {
-        let li = document.createElement('li')
-        li.innerHTML = 'o'
-        li.setAttribute('index', i + 1)
-        DOT.appendChild(li)
-    }
-    DOTS = document.querySelectorAll('.dot > li')
-    BANNER.appendChild(LI[0].cloneNode(true))
-    BANNER.prepend(LI[LI.length - 1].cloneNode(true))
-    liCount = document.querySelectorAll('.banner > .content > li').length
-    BANNER.style.width = 100 * liCount + 'vw'
-    BANNER.style.left = -(defaultLeft * index) + 'vw'
-    DOTS[index - 1].classList.add('active')
-    DOTS.forEach((li) => {
-        li.addEventListener('click', function () {
-            if (flag) return
-            BANNER.style.transition = 'left 1s'
+    let timer = null
+    let autoTime = 4000
+    let moveTime = autoTime / 2
+    carouselInit()
+    NEXTBUTTON.addEventListener('click', () => {
+        bannerHandler(1)
+    })
+    PREBUTTON.addEventListener('click', () => {
+        bannerHandler(-1)
+    })
+    function timerHandler() {
+        timer = setInterval(() => {
             flag = true
-            let i = this.getAttribute('index')
+            index = index + 1
+            BANNER.style.transition = 'left 2s'
+            BANNER.style.left = -(defaultLeft * index) + 'vw'
+            if (index === liCount - 1) {
+                index = 1
+                DOTS.forEach((item) => {
+                    item.classList.remove('active')
+                })
+                setTimeout(() => {
+                    BANNER.style.transition = '0s'
+                    BANNER.style.left = -(index * defaultLeft) + 'vw'
+                    DOTS[index - 1].classList.add('active')
+                    flag = false
+                }, moveTime)
+                return
+            }
             DOTS.forEach((item) => {
                 item.classList.remove('active')
             })
-            DOTS[i - 1].classList.add('active')
-            BANNER.style.left = -(i * defaultLeft) + 'vw'
-            console.log(i)
-            index = Number(i)
             setTimeout(() => {
+                DOTS[index - 1].classList.add('active')
                 flag = false
-            }, 1000)
+            }, moveTime)
+        }, autoTime)
+    }
+    function carouselInit() {
+        for (let i = 0; i < LI.length; i++) {
+            let li = document.createElement('li')
+            li.innerHTML = 'o'
+            li.setAttribute('index', i + 1)
+            DOT.appendChild(li)
+        }
+        DOTS = document.querySelectorAll('.dot > li')
+        BANNER.appendChild(LI[0].cloneNode(true))
+        BANNER.prepend(LI[LI.length - 1].cloneNode(true))
+        liCount = document.querySelectorAll('.banner > .content > li').length
+        BANNER.style.width = 100 * liCount + 'vw'
+        BANNER.style.left = -(defaultLeft * index) + 'vw'
+        DOTS[index - 1].classList.add('active')
+        timerHandler()
+        DOTS.forEach((li) => {
+            li.addEventListener('click', function () {
+                if (flag) return
+                clearInterval(timer)
+                BANNER.style.transition = 'left 2s'
+                flag = true
+                let i = this.getAttribute('index')
+                DOTS.forEach((item) => {
+                    item.classList.remove('active')
+                })
+                DOTS[i - 1].classList.add('active')
+                BANNER.style.left = -(i * defaultLeft) + 'vw'
+                index = Number(i)
+                setTimeout(() => {
+                    flag = false
+                }, moveTime)
+                timerHandler()
+            })
         })
-    })
-    NEXTBUTTON.addEventListener('click', () => {
+    }
+    function bannerHandler(num) {
+        let type = num > 0 ? true : false
         if (flag) return
+        clearInterval(timer)
         flag = true
-        index = index + 1
-        BANNER.style.transition = 'left 1s'
+        if (type) index = index + 1
+        if (!type) index = index - 1
+        BANNER.style.transition = 'left 2s'
         BANNER.style.left = -(defaultLeft * index) + 'vw'
         DOTS.forEach((item) => {
             item.classList.remove('active')
         })
-        if (index === liCount - 1) {
+        timerHandler()
+        if (index === liCount - 1 && flag) {
             setTimeout(() => {
                 index = 1
                 BANNER.style.transition = '0s'
                 BANNER.style.left = -(index * defaultLeft) + 'vw'
                 DOTS[index - 1].classList.add('active')
                 flag = false
-            }, 1000)
+            }, moveTime)
             return
         }
-        setTimeout(() => {
-            flag = false
-            DOTS[index - 1].classList.add('active')
-        }, 1000)
-    })
-    PREBUTTON.addEventListener('click', () => {
-        console.log(flag)
-        if (flag) return
-        flag = true
-        index = index - 1
-        BANNER.style.transition = 'left 1s'
-        BANNER.style.left = -(defaultLeft * index) + 'vw'
-        DOTS.forEach((item) => {
-            item.classList.remove('active')
-        })
-        if (index === 0) {
+        if (index === 0 && !flag) {
             setTimeout(() => {
                 index = liCount - 2
                 BANNER.style.transition = '0s'
                 BANNER.style.left = -(index * defaultLeft) + 'vw'
                 DOTS[index - 1].classList.add('active')
                 flag = false
-            }, 1000)
+            }, moveTime)
             return
         }
         setTimeout(() => {
             flag = false
             DOTS[index - 1].classList.add('active')
-        }, 1000)
-    })
+        }, moveTime)
+    }
 })()

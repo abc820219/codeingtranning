@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./reset.css" />
+        <link rel="stylesheet" href="./index.css" />
+        <style>
+            .app {
+                overflow: hidden;
+            }
+            .battery-log {
+                width: 50px;
+                height: 50px;
+                position: absolute;
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app">
+            <div class="battery-log">123</div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+        <script>
+            anime({
+                targets: '.battery-log',
+                left: '240px',
+                duration: 1000,
+                delay:1000,
+                endDelay: 3000,
+                direction: 'alternate',
+                easing: 'easeInOutExp',
+                direction: '',
+                loop:'',
+                autoplay: true,
+            })
+        </script>
+    </body>
+</html>
