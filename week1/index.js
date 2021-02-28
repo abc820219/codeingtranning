@@ -5,34 +5,28 @@
         block.classList.add('anime-block')
         NAVIGATION.appendChild(block)
     }
-    function animateCircles() {
-        anime({
-            targets: '.anime-block',
-            translateX: () => anime.random(1200, -1200),
-            translateY: () => anime.random(1200, -1200),
-            scale: () => anime.random(1, 4),
-            easing: 'linear',
-            duration: 2000,
-            opacity: 1,
-            delay: anime.stagger(10),
-            direction: 'alternate',
-            complete: () => {
-                opacity('.navigation-anime')
-            },
-        })
-    }
-    function opacity(className) {
-        anime({
-            targets: className,
-            opacity: 0,
-            duration: 2000,
-            complete: () => {
-                const div = document.querySelector(className)
-                document.body.removeChild(div)
-            },
-        })
-    }
-    animateCircles()
+    var tl = gsap.timeline()
+    tl.to('.anime-block', {
+        duration: 2,
+        translateX: () => Math.random() * (1200 - -1200) + -1200,
+        translateY: () => Math.random() * (1200 - -1200) + -1200,
+        scale: () => Math.random() * (4 - -1) + -1,
+        ease: 'linear',
+        stagger: {
+            each: 0.01,
+        },
+        repeat: 1,
+        yoyo: true,
+        opacity: 1,
+        direction: 'alternate',
+    }).to('.navigation-anime', {
+        opacity: 0,
+        duration: 2,
+        onComplete: () => {
+            const div = document.querySelector('.navigation-anime')
+            document.body.removeChild(div)
+        },
+    })
 })()
 ;(() => {
     const MENU = document.querySelector('.menu')
@@ -145,7 +139,7 @@
             item.classList.remove('active')
         })
         timerHandler()
-        if (index === liCount - 1 && flag) {
+        if (index === liCount - 1 && type) {
             setTimeout(() => {
                 index = 1
                 BANNER.style.transition = '0s'
@@ -155,7 +149,8 @@
             }, moveTime)
             return
         }
-        if (index === 0 && !flag) {
+        console.log(index === 0 && !type)
+        if (index === 0 && !type) {
             setTimeout(() => {
                 index = liCount - 2
                 BANNER.style.transition = '0s'
