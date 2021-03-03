@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body></body>
+    <script>
+        function avg(data) {
+            let total = data['employees'].reduce((pre, cur) => {
+                return pre + cur.salary
+            }, 0)
+            console.log(Math.floor(total / data['employees'].length))
+        }
+        avg({
+            count: 3,
+            employees: [
+                { name: 'John', salary: 30000 },
+                { name: 'Bob', salary: 60000 },
+                { name: 'Jenny', salary: 50000 },
+            ],
+        })
+    </script>
+</html>

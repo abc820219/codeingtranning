@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            function maxProduct(nums) {
+                let one = 0
+                let two = 0
+                let flag = null
+                nums.forEach((n) => {
+                    if (n > one) {
+                        flag = one
+                        one = n
+                        two = flag
+                        return
+                    }
+                    if (n < one && n > two) two = n
+                })
+                console.log(one * two)
+            }
+            maxProduct([5, 20, 2, 6])
+        </script>
+    </body>
+</html>
