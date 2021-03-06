@@ -1,32 +1,40 @@
 ;(() => {
     const NAVIGATION = document.querySelector('.navigation-anime')
+    let navcontent = 'Welcome to my codding training'
     for (let i = 0; i <= 100; i++) {
         const block = document.createElement('div')
         block.classList.add('anime-block')
         NAVIGATION.appendChild(block)
     }
-    var tl = gsap.timeline()
-    tl.to('.anime-block', {
-        duration: 2,
-        translateX: () => Math.random() * (1200 - -1200) + -1200,
-        translateY: () => Math.random() * (1200 - -1200) + -1200,
-        scale: () => Math.random() * (4 - -1) + -1,
-        ease: 'linear',
-        stagger: {
-            each: 0.01,
-        },
-        repeat: 1,
-        yoyo: true,
-        opacity: 1,
-        direction: 'alternate',
-    }).to('.navigation-anime', {
+    let tl = gsap.timeline({ repeat: 1, yoyo: true, repeatDelay: 1 })
+    tl.to('.cursor', {
+        duration: 1,
         opacity: 0,
-        duration: 2,
-        onComplete: () => {
-            const div = document.querySelector('.navigation-anime')
-            document.body.removeChild(div)
-        },
+        repeat: -1,
     })
+        .to('.text', { duration: 2, text: navcontent, ease: 'linear' })
+        .to('.anime-block', {
+            duration: 1,
+            translateX: 'random(1200,-1200)',
+            translateY: 'random(1200,-1200)',
+            scale: 'random(1,4)',
+            ease: 'linear',
+            stagger: {
+                each: 0.01,
+            },
+            repeat: 1,
+            yoyo: true,
+            opacity: 1,
+            direction: 'alternate',
+        })
+        .to('.navigation-anime', {
+            opacity: 0,
+            duration: 2,
+            onComplete: () => {
+                const div = document.querySelector('.navigation-anime')
+                document.body.removeChild(div)
+            },
+        })
 })()
 ;(() => {
     const MENU = document.querySelector('.menu')

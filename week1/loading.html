@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./reset.css" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"
+            integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.4.2/TextPlugin.min.js"></script>
+    </head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 36px;
+        }
+        .loading span {
+            display: inline-block;
+        }
+        .loadingHr {
+            height: 3px;
+            background-color: #000;
+            width: 0;
+        }
+    </style>
+    <body>
+        <div class="loading">
+            <span class="l">L</span>
+            <span class="o">o</span>
+            <span class="a">a</span>
+            <span class="d">d</span>
+            <span class="i">i</span>
+            <span class="n">n</span>
+            <span class="g">g</span>
+            <span class="dot1">.</span>
+            <span class="dot2">.</span>
+            <span class="dot3">.</span>
+            <p class="loadingHr"></p>
+        </div>
+        <script>
+            // let masterTl = gsap.timeline({ repeat: -1 })
+            // let t = document.querySelectorAll('.loading span')
+            // console.log(t)
+            // t.forEach((dom) => {
+            //     console.log(dom.className)
+            //     let tl = gsap.timeline()
+            //     tl.to(`.${dom.className}`, {
+            //         duration: 0.1,
+            //         translateY: -20,
+            //         repeat: 1,
+            //         yoyo: true,
+            //     })
+            //     masterTl.add(tl)
+            // })
+            gsap.to('.loadingHr', {
+                duration: 2,
+                width: '100%',
+            })
+        </script>
+    </body>
+</html>

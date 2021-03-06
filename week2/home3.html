@@ -11,19 +11,19 @@
             function maxProduct(nums) {
                 let one = 0
                 let two = 0
-                let flag = null
-                nums.forEach((n) => {
-                    if (n > one) {
-                        flag = one
-                        one = n
-                        two = flag
-                        return
+                let result = 0
+                nums.forEach((n, i) => {
+                    for (let j = i + 1; j < nums.length; j++) {
+                        if (n * nums[j] > result) {
+                            result = n * nums[j]
+                        }
                     }
-                    if (n < one && n > two) two = n
                 })
-                console.log(one * two)
+                console.log(result)
             }
             maxProduct([5, 20, 2, 6])
+            maxProduct([10, -20, 0, 3])
+            maxProduct([-10, -20, 3, 4])
         </script>
     </body>
 </html>

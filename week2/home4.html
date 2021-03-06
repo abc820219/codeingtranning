@@ -19,13 +19,14 @@
                 for (let i = 0; i < nums.length; i++) {
                     flag = target - nums[i]
                     if (obj[flag]) {
-                        result.push(obj[flag])
                         result.push(i)
+                        result.push(obj[flag])
                         break
                     }
                 }
+                console.log(result);
             }
-            result = twoSum([2, 11, 7, 15, 1, 10], 11)
+            result = twoSum([2, 11, 7, 15], 9)
         </script>
     </body>
 </html>
