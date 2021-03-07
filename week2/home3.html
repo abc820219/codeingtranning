@@ -9,9 +9,14 @@
     <body>
         <script>
             function maxProduct(nums) {
-                let one = 0
-                let two = 0
                 let result = 0
+                if (!nums.length) return
+                if (nums.length == 2) {
+                    return nums[0] * nums[1]
+                }
+                if (nums.length == 1) {
+                    return nums[0]
+                }
                 nums.forEach((n, i) => {
                     for (let j = i + 1; j < nums.length; j++) {
                         if (n * nums[j] > result) {
@@ -19,11 +24,14 @@
                         }
                     }
                 })
-                console.log(result)
+                return result
             }
-            maxProduct([5, 20, 2, 6])
-            maxProduct([10, -20, 0, 3])
-            maxProduct([-10, -20, 3, 4])
+            console.log(maxProduct([2]))
+            console.log(maxProduct([10, 2]))
+            console.log(maxProduct([-10, 2]))
+            console.log(maxProduct([5, 20, 2, 6]))
+            console.log(maxProduct([10, -20, 0, 3]))
+            console.log(maxProduct([-10, -20, 3, 4]))
         </script>
     </body>
 </html>
