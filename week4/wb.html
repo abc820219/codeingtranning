@@ -1,35 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Socket Thing1</title>
-</head>
-<body>
-    Client1
-    <button onclick="sendMsg()">Send Msg</button>
-</body>
-<script>
-    // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost:5000/test');
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Socket Thing1</title>
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body>
+        <div id="app">
+            <ul class="come">
+                <li v-for="(content,key) in comeList" :keys="key">
+                    {{content}}
+                </li>
+            </ul>
+            <ul class="leave">
+                <li v-for="(content,key) in leaveList" :keys="key">
+                    {{content}}
+                </li>
+            </ul>
+            <ul>
+                <li v-for="(content,key) in listContent" :keys="key">
+                    {{content}}
+                </li>
+            </ul>
+            <label>
+                輸入:<input type="text" name="" id="" v-model="user.message" />
+            </label>
+            <button @click="msgHandler()">Send Msg</button>
+        </div>
+    </body>
+    <script>
+        const EventHandlingApp = {
+            data() {
+                let _this = this
+                return {
+                    user: {
+                        type: '',
+                        message: '',
+                        name: '小b',
+                    },
+                    listContent: [],
+                    comeList: [],
+                    leaveList: [],
+                }
+            },
+            methods: {
+                msgHandler() {
+                    this.listContent.push('我:' + this.user.message)
+                    socket.send(JSON.stringify(this.user))
+                },
+                wbMessageHandler() {},
+            }
+        }
+        let app = Vue.createApp(EventHandlingApp).mount('#app')
 
-    // Connection opened
-    socket.addEventListener('open', function (event) {
-        console.log('Connected to the WS Server!')
-    });
+        // Create WebSocket connection.
+        const socket = new WebSocket('ws://localhost:3000', 'protocol1')
 
-    // Connection closed
-    socket.addEventListener('close', function (event) {
-        console.log('Disconnected from the WS Server!')
-    });
+        // Connection opened
+        socket.addEventListener('open', function (event) {
+            let data = JSON.stringify({
+                type: 'come',
+                name:  app.user.name,
+                message: app.user.name + '來了',
+            })
+            socket.send(data)
+        })
 
-    // Listen for messages
-    socket.addEventListener('message', function (event) {
-        console.log('Message from server ', event.data);
-    });
-    // Send a msg to the websocket
-    const sendMsg = () => {
-        socket.send('Hello from Client1!');
-    }
-</script>
+        // Connection closed
+        socket.addEventListener('close', function (data) {
+            console.log("closed")
+        })
+
+
+        // Listen for messages
+        socket.addEventListener('message', function (event) {
+            let data = JSON.parse(event.data)
+            console.log(event)
+            if (data.type == 'come') {
+                app.comeList.push(data.message)
+                return
+            }
+            if (data.type == 'leave') {
+                app.leaveList.push(data.message)
+                return
+            }
+            app.listContent.push(data.name + ':' + data.message)
+        })
+        // Send a msg to the websocket
+        const sendMsg = () => {
+            socket.send('Hello from Client1!')
+        }
+    </script>
 </html>
