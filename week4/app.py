@@ -42,7 +42,10 @@ def logoutHandler():
 
 @app.route("/member")
 def index_home():
-  return render_template('/member.html')
+  if "isLogin" in session:
+    return render_template('/member.html')
+  else:
+    return redirect('/')
 
 @app.route("/error")
 def index_error():
