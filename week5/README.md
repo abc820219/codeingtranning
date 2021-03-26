@@ -2,21 +2,27 @@
 mysql –u用戶名  –p密碼;
 
 建立與刪除database <br>
-create database 名稱;
+create database 名稱;<br>
 drop database 名稱;
 
 使用資料庫 <br>
 use 資料庫名稱;
  
 顯示資料庫與表 <br>
-show databases;
+show databases;<br>
 show tables;
 
 刪除表 <br>
 drop tables user;
 
 新建user表 <br>
-create table user(id bigint not null auto_increment primary key comment "流水號",name varchar(255) not null comment "名稱",username varchar(255) not null comment "使用者名稱", password varchar(255) not null comment "密碼", time datetime not null default current_timestamp comment "時間戳");
+create table user( <br>
+  id bigint not null auto_increment primary key comment "流水號",<br>
+  name varchar(255) not null comment "名稱",<br>
+  username varchar(255) not null comment "使用者名稱",<br>
+  password varchar(255) not null comment "密碼",<br>
+  time datetime not null default current_timestamp comment "時間戳"<br>
+  );
 
 
 使用INSERT 指令新增一筆資料到user 資料表中，這筆資料的username 和password 欄位必須是ply。接著繼續新增至少 4 筆隨意的資料。 <br>
@@ -32,6 +38,7 @@ select count(id) from user;
 select * from user order by time asc;
 
 使用SELECT 指令取得user 資料表中第 2 ~ 4 共三筆資料，並按照time 欄位，由近到遠排序。<br>
+select * from user where order by time asc limit 2,5; <br>
 select * from user where id between 2 and 4 order by time asc;
 
 使用SELECT 指令取得欄位username 是ply 的使用者資料。<br>
@@ -65,3 +72,9 @@ select * from user right join message on user.id=message.user_id where username 
 ![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/10.jpg)<br>
 ![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/11.jpg)<br>
 ![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/12.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/13.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/14.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/15.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/16.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/17.jpg)<br>
+![image](https://github.com/abc820219/codeingtranning/blob/main/week5/images/18.jpg)<br>
