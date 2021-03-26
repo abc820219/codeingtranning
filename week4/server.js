@@ -2,6 +2,7 @@
 const express = require('express')
 const SocketServer = require('ws').Server
 
+
 //指定開啟的 port
 const PORT = 3000
 
@@ -13,6 +14,7 @@ const wss = new SocketServer({ server })
 
 //當 WebSocket 從外部連結時執行
 wss.on('connection', (ws, req) => {
+  
     ws.on('message', (data) => {
         if (!ws.name) {
             ws.name = JSON.parse(data).name
@@ -41,4 +43,5 @@ wss.on('connection', (ws, req) => {
         }
       })
     })
+
 })
