@@ -38,8 +38,7 @@ select count(id) from user;
 select * from user order by time asc;
 
 使用SELECT 指令取得user 資料表中第 2 ~ 4 共三筆資料，並按照time 欄位，由近到遠排序。<br>
-select * from user where order by time asc limit 2,5; <br>
-select * from user where id between 2 and 4 order by time asc;
+select * from user order by time asc limit 1,3; <br>
 
 使用SELECT 指令取得欄位username 是ply 的使用者資料。<br>
 select * from user where username like "ply";
