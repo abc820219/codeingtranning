@@ -47,7 +47,7 @@ def index_home():
   else:
     return redirect('/')
 
-@app.route("/error")
+@app.route("/error?message='帳號密碼錯誤'")
 def index_error():
   return render_template('/error.html')
   
