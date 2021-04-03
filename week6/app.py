@@ -76,7 +76,7 @@ def signHandler():
       return redirect("/")
 
 # 登入api
-@app.route("/login",methods=["POST"])
+@app.route("/signin",methods=["POST"])
 def loginHandler():
   # REST API用
   # print(request.get_json())
@@ -102,7 +102,7 @@ def loginHandler():
 
 
 # 登出api
-@app.route("/logout")
+@app.route("/signup")
 def logoutHandler():
   # 刪除session
   session.pop("name",None)
