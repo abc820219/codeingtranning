@@ -52,7 +52,9 @@ def getusersHandler():
   if request.method == "GET":
     sql = f"SELECT * FROM user WHERE username like '{username}'"
     mycursor.execute(sql)
+    print(mycursor)
     result = mycursor.fetchone()
+    print(result)
     if result != None:
       data = {
         'data':{
@@ -70,32 +72,7 @@ def getusersHandler():
       json_str = json.dumps(data, indent=3)
       return json_str
   else:
-    req = request.get_json()
-    try:
-      username = req['username']
-      sql = f"update user set username = '{username}' where id ='{session['id']}'"
-      mycursor.execute(sql)
-      mydb.commit()
-      sql = f"SELECT * FROM user WHERE id like '{session['id']}'"
-      mycursor.execute(sql)
-      result = mycursor.fetchone()
-      data = {
-          'data':{
-          'id':result[0],
-          'name':result[1],
-          'username':result[2],
-          "ok":True
-          }
-      }
-      session["name"] = username
-      json_str = json.dumps(data, indent=3)
-      return json_str
-    except:
-      data = {
-        "error":False
-      }
-      json_str = json.dumps(data, indent=3)
-      return json_str
+    print("post")
 
 # 失敗頁面
 @app.route('/error')
@@ -103,7 +80,6 @@ def errorHandler():
   # 取得url query
   message = request.args.get('message','預設錯誤')
   return render_template('/error.html',message=message)
-
 
 # 註冊api
 @app.route('/sign',methods=["POST"])
@@ -137,21 +113,21 @@ def loginHandler():
   name =  request.form["name"]
   username = request.form["username"]
   password = request.form["password"]
-  id = None
   # sql字串
-  sql = f"SELECT count('id'), id FROM user WHERE username like '{username}' and name like '{name}' and password like'{password}'"
+  sql = f"SELECT count('id') FROM user WHERE username like '{username}' and name like '{name}' and password like'{password}'"
   # 執行sql
   mycursor.execute(sql)
   # 判斷是否已經登入
   flag = False
   for x in mycursor:
     if x[0] != 0:
-       id = x[1]
        flag = True
   if flag == True:
+    sql = f"SELECT count('id') FROM user WHERE username like '{username}' and name like '{name}' and password like'{password}'"
+    mycursor.execute(sql)
+    print(mycursor)
     session.permanent = True
-    session["name"] = username
-    session["id"] = x[1]
+    session["name"] = name
     return redirect('/member')
   else:
     return redirect("/error?message=登入錯誤")
@@ -161,9 +137,7 @@ def loginHandler():
 @app.route("/signout")
 def logoutHandler():
   # 刪除session
-  # session.clear()
   session.pop("name",None)
-  session.pop("id",None)
   return redirect('/')
 
 
