@@ -1,6 +1,6 @@
 import mysql.connector
 import json
-from flask import Flask,request,redirect,render_template,session,jsonify
+from flask import Flask,request,redirect,render_template,session
 from datetime import timedelta
 # 連線
 mydb = mysql.connector.connect(
@@ -9,6 +9,7 @@ mydb = mysql.connector.connect(
   password="root",
   database="website"
 )
+
 mycursor = mydb.cursor()
 # 執行sql語法
 # mycursor.execute("SHOW DATABASES")
@@ -38,7 +39,6 @@ def index():
 @app.route('/signup')
 def registerHandler():
   return render_template('/signup.html')
-
 
 # 會員頁面
 @app.route("/member")
@@ -71,6 +71,7 @@ def getusersHandler():
       return json_str
   else:
     req = request.get_json()
+    # 錯誤判斷
     try:
       username = req['username']
       sql = f"update user set username = '{username}' where id ='{session['id']}'"
@@ -103,7 +104,6 @@ def errorHandler():
   # 取得url query
   message = request.args.get('message','預設錯誤')
   return render_template('/error.html',message=message)
-
 
 # 註冊api
 @app.route('/sign',methods=["POST"])
@@ -156,7 +156,6 @@ def loginHandler():
   else:
     return redirect("/error?message=登入錯誤")
 
-
 # 登出api
 @app.route("/signout")
 def logoutHandler():
@@ -165,8 +164,6 @@ def logoutHandler():
   session.pop("name",None)
   session.pop("id",None)
   return redirect('/')
-
-
 
 # server啟動
 app.run(port=3000)
@@ -183,3 +180,9 @@ app.run(port=3000)
 # 澎澎udemy
 # crud python & mysql
 # https://www.youtube.com/watch?v=91iNR0eG8kE&list=PLzMcBGfZo4-l5kVSNVKGO60V6RkXAVtp-&index=2
+# 錯誤判斷
+# https://medium.com/ccclub/ccclub-python-for-beginners-tutorial-edd15e2b5d1e
+# session操作
+# https://blog.csdn.net/qq_42817166/article/details/83512544
+# fetch
+# https://blog.csdn.net/u014234260/article/details/79581041
