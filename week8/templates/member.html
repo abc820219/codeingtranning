@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"
+            integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
+            crossorigin="anonymous"
+        ></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <h1>
+          使用者:
+          <span id="username">
+            {{name}}
+          </span>
+          登入成功，會員頁面
+        </h1>
+        <a href="/signout">登出</a>
+        <div>
+            <label>
+                <input type="text" id="updataTxt" />
+                <button id="updataBtn">更新我的姓名</button>
+            </label>
+            <p id="updataResult"></p>
+            <label>
+                <input type="text" id="searchTxt" />
+                <button id="searchBtn">查詢</button>
+            </label>
+            <p id="searchResult"></p>
+        </div>
+    </body>
+    <script>
+        let searchTxt = document.getElementById('searchTxt')
+        let searchBtn = document.getElementById('searchBtn')
+        let searchResult = document.getElementById('searchResult')
+        let updataTxt = document.getElementById('updataTxt')
+        let updataBtn = document.getElementById('updataBtn')
+        let updataResult = document.getElementById('updataResult')
+        let username = document.getElementById('username')
+        searchBtn.addEventListener('click', function (e) {
+            let username = searchTxt.value
+            if(!username) return alert("查詢內容錯誤")
+            fetch(`/api/users?username=${username}`, { method: 'get' })
+                .then((res) => {
+                    return res.json()
+                })
+                .then((res) => {
+                    let str
+                    if (res.data != null) {
+                        str = `username:${res.data.username},name:${res.data.name}`
+                    } else {
+                        str = `not find`
+                    }
+                    searchResult.innerText = str
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        })
+        updataBtn.addEventListener('click', function (e) {
+            if(!updataTxt.value) return alert("更新內容錯誤")
+            axios
+                .post('/api/user', {
+                    username: updataTxt.value,
+                })
+                .then((res) => {
+                  console.log(res)
+                  if(res.status == 200){
+                    console.log("????")
+                    if(res.data.data.ok){
+                      updataResult.innerText = "更新成功"
+                      username.innerText = res.data.data.username
+                    }else{
+                      updataResult.innerText = "更新失敗"
+                    }
+                  }
+                }).catch(err=>{
+                  console.log(err);
+                })
+        })
+    </script>
+</html>

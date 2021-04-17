@@ -1,0 +1,16 @@
+修改內容:<br>
+session驗證改為實作cookie<br>
+流程<br>
+登入時serve端產生一組id給client端<br>
+client得到此id，發送請求時自動在header上帶上此id<br>
+serve端就可以一直使用此id來做狀態的判斷<br>
+<br>
+索引總結:SQL索引採用一種Btree搜尋法,索引是為了提高SQL的速度<br>
+適合使用的狀況:<br>
+資料量有一定程度<br>
+不常被修改的欄位<br>
+高度會使用where語句的欄位<br>
+基於以上基點,我把帳號name欄位來做了一個普通索引<br>
+<br>
+驗證:<br>
+前端多了判斷是否有輸入訊息才發送請求給後端<br>

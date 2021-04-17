@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        登入帳號 /
+        <a href="/signup">註冊</a>
+        <form action="/signin" method="post">
+            <label>
+                帳號:
+                <input type="text" name="name" id="name" />
+            </label>
+            <label>
+                名稱:
+                <input type="text" name="username" id="username" />
+            </label>
+            <label>
+                密碼:
+                <input type="password" name="password" id="password" />
+            </label>
+            <button id="loginBtn">登入</button>
+        </form>
+        <script>
+            const loginBtn = document.querySelector('#loginBtn')
+            const nameDom = document.querySelector('#name')
+            const usernameDom = document.querySelector('#username')
+            const passwordDom = document.querySelector('#password')
+            loginBtn.addEventListener('click', function (e) {
+                if (!nameDom.value || !usernameDom.value || !passwordDom.value) {
+                    e.preventDefault()
+                    alert("內容不得為空")
+                }
+            })
+        </script>
+    </body>
+</html>
